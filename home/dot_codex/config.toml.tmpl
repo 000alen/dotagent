@@ -1,0 +1,15 @@
+# Portable Codex defaults. Keep credentials and machine-local settings outside
+# this public repository.
+
+model_reasoning_effort = "high"
+model_verbosity = "low"
+
+[agents]
+default_subagent_reasoning_effort = "high"
+max_concurrent_threads_per_session = 4
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"
+
+[plugins."slack@openai-curated-remote"]
+enabled = true

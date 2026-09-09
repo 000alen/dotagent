@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+
+# Never commit Codex or connector runtime state.
+auth.json
+history.jsonl
+sessions/
+shell_snapshots/
+logs/
+cache/
+tmp/

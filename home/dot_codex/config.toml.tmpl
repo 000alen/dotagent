@@ -1,6 +1,9 @@
 # Portable Codex defaults. Keep credentials and machine-local settings outside
 # this public repository.
 
+model = "openai/gpt-5.6-sol"
+model_provider = "routekit"
+model_catalog_json = "{{ joinPath .chezmoi.homeDir ".codex/.routekit-model-catalog.json" }}"
 model_reasoning_effort = "high"
 model_verbosity = "low"
 
@@ -13,3 +16,28 @@ url = "https://mcp.linear.app/mcp"
 
 [plugins."slack@openai-curated-remote"]
 enabled = true
+
+# RouteKit owns the generated catalog, remote registration, and credential.
+# This template only preserves portable Codex-side provider wiring.
+[model_providers.routekit]
+name = "RouteKit gateway"
+base_url = "https://orbit-gateway.velum.sh/v1"
+wire_api = "responses"
+
+[model_providers.routekit.auth]
+command = "/usr/bin/env"
+args = [
+  "-u",
+  "NODE_CHANNEL_FD",
+  "-u",
+  "NODE_CHANNEL_SERIALIZATION_MODE",
+  "routekit",
+  "credential",
+  "get",
+  "--tool",
+  "codex",
+  "--config-path",
+  "{{ joinPath .chezmoi.homeDir ".codex/config.toml" }}",
+  "--routekit-home",
+  "{{ joinPath .chezmoi.homeDir ".routekit" }}",
+]
